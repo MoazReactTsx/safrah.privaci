@@ -23,6 +23,10 @@
             border-bottom: 1px solid #fff;
             text-align: center;
             margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
         }
         .name {
             font-weight: 600;
@@ -37,51 +41,129 @@
         h1, h2 {
             color: #333;
         }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <main>
         <header>
             <h2><span class="name">سفرية</span></h2>
+            <button id="toggle-language-btn"></button>
         </header>
         
-        <div class="part">
-            <h1>شروط الاستخدام</h1>
-            <p>
-                شكراً لاستخدامكم تطبيق <span class="name">سفرية</span>. هذه الصفحة توضح شروط الاستخدام للتطبيق، علماً بأن التطبيق لا يقوم بجمع أي بيانات شخصية.
-            </p>
-        </div>
-        
-        <div class="part">
-            <h2>سياسة الخصوصية</h2>
-            <p>
-                تطبيق <span class="name">سفرية</span> يضمن الحفاظ على خصوصية المستخدمين. التطبيق لا يجمع أو يخزن أي بيانات شخصية أو معلومات تعريفية عن المستخدم.
-            </p>
-        </div>
-        
-        <div class="part">
-            <h2>استخدام التطبيق</h2>
-            <p>
-                يتم تقديم تطبيق <span class="name">سفرية</span> كمصدر معلوماتي حول الوجهات السياحية المختلفة. يُمنع استخدام التطبيق لأي أغراض غير قانونية أو مسيئة.
-            </p>
-        </div>
-        
-        <div class="part">
-            <h2>تغييرات على شروط الاستخدام</h2>
-            <p>
-                يحتفظ تطبيق <span class="name">سفرية</span> بالحق في تعديل أو تحديث شروط الاستخدام في أي وقت. سيتم نشر أي تغييرات على هذه الصفحة.
-            </p>
-        </div>
-        
-        <div class="part">
-            <h2>تواصل معنا</h2>
-            <p>
-                إذا كانت لديكم أي أسئلة حول شروط الاستخدام، يمكنكم التواصل معنا عبر البريد الإلكتروني: codeb.jed@icloud.com
-            </p>
-            <p>
-                آخر تحديث: 2024
-            </p>
+        <div id="content">
+            <!-- Content will be dynamically loaded based on language -->
         </div>
     </main>
+
+    <script>
+        // Language configuration
+        const langQuery = new URLSearchParams(window.location.search).get("lang");
+        const supportedLanguages = ["en", "ar"];
+        const lang = supportedLanguages.includes(langQuery) ? langQuery : "ar"; // Default to Arabic
+
+        // Elements
+        const contentDiv = document.getElementById("content");
+        const toggleLanguageBtn = document.getElementById("toggle-language-btn");
+
+        // Terms of Use content in both languages
+        const termsOfUse = {
+            en: `
+                <div class="part">
+                    <h1>Terms of Use</h1>
+                    <p>
+                        Thank you for using <span class="name">Safaria</span>. This page explains the Terms of Use for the app, noting that the app does not collect any personal data.
+                    </p>
+                </div>
+                <div class="part">
+                    <h2>Privacy Policy</h2>
+                    <p>
+                        The <span class="name">Safaria</span> app ensures user privacy. The app does not collect or store any personal or identifiable information about the user.
+                    </p>
+                </div>
+                <div class="part">
+                    <h2>Using the App</h2>
+                    <p>
+                        The <span class="name">Safaria</span> app is provided as a source of information about various tourist destinations. Using the app for any illegal or abusive purposes is prohibited.
+                    </p>
+                </div>
+                <div class="part">
+                    <h2>Changes to Terms of Use</h2>
+                    <p>
+                        The <span class="name">Safaria</span> app reserves the right to modify or update the Terms of Use at any time. Any changes will be posted on this page.
+                    </p>
+                </div>
+                <div class="part">
+                    <h2>Contact Us</h2>
+                    <p>
+                        If you have any questions about the Terms of Use, you can contact us at codeb.jed@icloud.com.
+                    </p>
+                    <p>
+                        Last updated: 2024
+                    </p>
+                </div>
+            `,
+            ar: `
+                <div class="part">
+                    <h1>شروط الاستخدام</h1>
+                    <p>
+                        شكراً لاستخدامكم تطبيق <span class="name">سفرية</span>. هذه الصفحة توضح شروط الاستخدام للتطبيق، علماً بأن التطبيق لا يقوم بجمع أي بيانات شخصية.
+                    </p>
+                </div>
+                <div class="part">
+                    <h2>سياسة الخصوصية</h2>
+                    <p>
+                        تطبيق <span class="name">سفرية</span> يضمن الحفاظ على خصوصية المستخدمين. التطبيق لا يجمع أو يخزن أي بيانات شخصية أو معلومات تعريفية عن المستخدم.
+                    </p>
+                </div>
+                <div class="part">
+                    <h2>استخدام التطبيق</h2>
+                    <p>
+                        يتم تقديم تطبيق <span class="name">سفرية</span> كمصدر معلوماتي حول الوجهات السياحية المختلفة. يُمنع استخدام التطبيق لأي أغراض غير قانونية أو مسيئة.
+                    </p>
+                </div>
+                <div class="part">
+                    <h2>تغييرات على شروط الاستخدام</h2>
+                    <p>
+                        يحتفظ تطبيق <span class="name">سفرية</span> بالحق في تعديل أو تحديث شروط الاستخدام في أي وقت. سيتم نشر أي تغييرات على هذه الصفحة.
+                    </p>
+                </div>
+                <div class="part">
+                    <h2>تواصل معنا</h2>
+                    <p>
+                        إذا كانت لديكم أي أسئلة حول شروط الاستخدام، يمكنكم التواصل معنا عبر البريد الإلكتروني: codeb.jed@icloud.com
+                    </p>
+                    <p>
+                        آخر تحديث: 2024
+                    </p>
+                </div>
+            `
+        };
+
+        // Function to update content and button text based on language
+        function updateContent(language) {
+            contentDiv.innerHTML = termsOfUse[language] || termsOfUse["ar"];
+            toggleLanguageBtn.textContent = language === "ar" ? "English" : "العربية";
+        }
+
+        // Toggle language button functionality
+        toggleLanguageBtn.addEventListener("click", () => {
+            const newLang = lang === "ar" ? "en" : "ar";
+            window.location.search = `?lang=${newLang}`;
+        });
+
+        // Initial content load
+        updateContent(lang);
+    </script>
 </body>
 </html>
